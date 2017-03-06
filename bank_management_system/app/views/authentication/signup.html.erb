@@ -1,0 +1,18 @@
+<h1>Signup Page</h1>
+ <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
+<br><br><br><br>
+
+<form action="/signupcheck" method="GET">
+Name: <input type="text" name="name">
+E-mail : <input type="text" name="email">
+Password: <input type="Password" name="password">
+<input type="submit" value="CREATE USER">
+
+<br><br><br><br>
+
+Existing user?<a href="/signin">LOGIN</a>
+
+
+</form>

@@ -1,0 +1,24 @@
+<h1>Signin page</h1>
+  
+   <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
+<br><br><br><br>
+
+<div class="form">
+
+<form action="/signincheck">
+
+E-mail : <input type="text" name="email">
+Password: <input type="Password" name="password">
+<input type="submit" value="submit">
+</form>
+
+</div>
+
+<br><br><br>
+
+<div class="formbottompart">
+New User?<a href="/signup">signup</a>
+</div>
+
