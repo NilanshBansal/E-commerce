@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2>USER DETAILS</h2>
+
+	Name:  <%=@curuser.name%><br>
+	Email: <%=@curuser.email%><br>
+
+	Password: <%=@curuser.password.first%>
+
+	<%for i in 2..@len1%>
+		 *
+	<%end%>	
+	
+	<br><br><br><br>
+	<h2>BANK DETAILS</h2>
+	Username: <%=@curaccount.username%><br>
+	Password: <%=@curaccount.password.first%>
+	<%for i in 2..@len2%>
+		 *
+	<%end%>	<br>
+	Balance: <%=@curaccount.balance%><br>
+
+	<br><br><br><br>
+	<a href="/dashboard">Go Back</a>
+
+</body>
+</html>
+
+
+
