@@ -67,6 +67,24 @@ class HomeController < ApplicationController
 	
 	def dispproducts
 		
+		@category=params[:category]
+		@products=Product.where(:category=>@category) 
 	end	
-	
+
+	def addtocart
+		userid=session[:userid]
+		status="added"
+		qty=params[:qty]
+		productid=params[:productid]
+		addtocartdate=Time.now
+
+		Shopping.create(:userid=>userid,:status=>status,:qty=>qty,:productid=>productid,:addtocartdate=>addtocartdate)
+
+		return redirect_to '/dashboard'
+	end	
+
+
+	def mycart
+
+	end	
 end

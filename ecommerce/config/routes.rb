@@ -16,5 +16,7 @@ Rails.application.routes.draw do
   get 'sell'=>'home#sell'
   get 'sellstore'=>'home#sellstore'
   get '/' => 'home#index'
-  put '/dispproducts'=>'home#dispproducts'
+  get '/dispproducts'=>'home#dispproducts'
+  get '/mycart'=>'home#mycart'
+  get '/addtocart'=>'home#addtocart'
 end

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DISPLAY PRODUCTS</title>
+</head>
+<body>
+	<h3>Displaying all products from <%=@category%> category </h3>
+	<ol>
+		<%@products.each do |curproduct| %>
+			<li>
+				<strong>Name: </strong><%=curproduct.name%>  <br> <strong>Color: </strong><%=curproduct.color%> <br>
+				<strong>Price: </strong><%=curproduct.price%>  <br>
+				<strong>Description: </strong><%=curproduct.description%><br>
+
+				
+				<form action="/addtocart" method="GET">
+					Qty: <input type="number" name="qty" min="1" required>
+					<input type="submit" value="Add To Cart ">
+					<input type="hidden" name="productid" value="<%=curproduct.id%>">
+				</form>	
+			</li>
+			<br><br>
+
+		<%end%>	
+	</ol>
+
+	<br><br><br>
+	<a href="/mycart">My Cart</a>
+	<br><br>
+	<a href="/dashboard">Go Back </a>
+</body>
+</html>
