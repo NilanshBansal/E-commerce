@@ -71,7 +71,7 @@ class HomeController < ApplicationController
 		@curuserid=session[:userid]
 		@products=[]
 		@shoppings=[]
-		
+
 		
 		@products= Product.where(:category=>@category).where.not(:sellerid=>@curuserid)
 
@@ -79,6 +79,8 @@ class HomeController < ApplicationController
 			@products.each do |curpro| 
 				
 			temp=Shopping.find_by_userid_and_productid(@curuserid,curpro.id)
+
+		
 			if temp
 			@shoppings.push(temp)
 
