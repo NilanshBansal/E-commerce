@@ -6,23 +6,71 @@
 <body>
 	<h3>Displaying all products from <%=@category%> category </h3>
 	<ol>
-		<%@products.each do |curproduct| %>
-			<li>
-				<strong>Name: </strong><%=curproduct.name%>  <br> <strong>Color: </strong><%=curproduct.color%> <br>
-				<strong>Price: </strong><%=curproduct.price%>  <br>
-				<strong>Description: </strong><%=curproduct.description%><br>
+		<%if @products.length==0 %>
+			NO PRODUCTS
 
-				
-				<form action="/addtocart" method="GET">
+		<%elsif @shoppings.length==0%>
+			<%@products.each do |curproduct| %>
+				<li>	
+					<strong>Name: </strong><%=curproduct.name%>  <br> <strong>Color: </strong><%=curproduct.color%> <br>
+					<strong>Price: </strong><%=curproduct.price%>  <br>
+					<strong>Description: </strong><%=curproduct.description%><br>
+
+									
+					<form action="/addtocart" method="GET">
 					Qty: <input type="number" name="qty" min="1" required>
 					<input type="submit" value="Add To Cart ">
 					<input type="hidden" name="productid" value="<%=curproduct.id%>">
-				</form>	
-			</li>
-			<br><br>
+										
+					</form>	
+				</li>	
+			<%end%>
 
-		<%end%>	
+		<%else%>
+			<% @products.zip (@shoppings).each do |curproduct,curshop| %>
+				<%if curshop %>
+					<%if curshop.productid==curproduct.id %>
+
+					<%else%>
+						<li>
+						<strong>Name: </strong><%=curproduct.name%>  <br> <strong>Color: </strong><%=curproduct.color%> <br>
+						<strong>Price: </strong><%=curproduct.price%>  <br>
+						<strong>Description: </strong><%=curproduct.description%><br>
+
+								
+						<form action="/addtocart" method="GET">
+							Qty: <input type="number" name="qty" min="1" required>
+								 <input type="submit" value="Add To Cart ">
+								 <input type="hidden" name="productid" value="<%=curproduct.id%>">
+
+						</form>	
+						</li>
+
+					<%end%>
+				<%else%>
+					<li>	
+					<strong>Name: </strong><%=curproduct.name%>  <br> <strong>Color: </strong><%=curproduct.color%> <br>
+					<strong>Price: </strong><%=curproduct.price%>  <br>
+					<strong>Description: </strong><%=curproduct.description%><br>
+
+									
+					<form action="/addtocart" method="GET">
+					Qty: <input type="number" name="qty" min="1" required>
+					<input type="submit" value="Add To Cart ">
+					<input type="hidden" name="productid" value="<%=curproduct.id%>">
+										
+					</form>	
+				    </li>
+				<%end%>
+			<%end%>
+		<%end%>
+
+		 
+
 	</ol>
+
+	
+	
 
 	<br><br><br>
 	<a href="/mycart">My Cart</a>

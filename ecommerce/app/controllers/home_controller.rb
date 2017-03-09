@@ -68,7 +68,28 @@ class HomeController < ApplicationController
 	def dispproducts
 		
 		@category=params[:category]
-		@products=Product.where(:category=>@category) 
+		@curuserid=session[:userid]
+		@products=[]
+		@shoppings=[]
+		
+		
+		@products= Product.where(:category=>@category).where.not(:sellerid=>@curuserid)
+
+		if @products.length!=0
+			@products.each do |curpro| 
+				
+			temp=Shopping.find_by_userid_and_productid(@curuserid,curpro.id)
+			if temp
+			@shoppings.push(temp)
+
+		    end
+
+		   end	
+		else
+			@products=[]
+			@shoppings=[]
+		end	
+		
 	end	
 
 	def addtocart
@@ -85,6 +106,45 @@ class HomeController < ApplicationController
 
 
 	def mycart
+		@userid=session[:userid]
+		status="added"
+		@products=[]
+		@shoppings=Shopping.where(:userid=>@userid,:status=>status)
+		@accountdetails=Account.find_by_userid(@userid)
+		
+		
+		@shoppings.each do |curshop|
 
+			@products+=Product.where(:id=>curshop.productid)
+
+	    end
 	end	
+
+
+
+	def edit
+		
+		qty=params[:qty]
+		userid=session[:userid]
+		editorder=params[:editorder]
+		productid=params[:productid]
+		shopping=Shopping.find_by_userid_and_productid(userid,productid)
+		
+		if shopping
+			if editorder=="save"
+				 shopping.qty=qty
+				shopping.save
+
+			return redirect_to '/mycart'
+			elsif editorder=="remove item"
+
+				shopping.destroy
+				shopping.save	
+			return redirect_to '/mycart'
+			end	
+		end	
+	end	
+
+
+
 end

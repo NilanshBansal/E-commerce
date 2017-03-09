@@ -19,4 +19,5 @@ Rails.application.routes.draw do
   get '/dispproducts'=>'home#dispproducts'
   get '/mycart'=>'home#mycart'
   get '/addtocart'=>'home#addtocart'
+  get '/edit'=>'home#edit'
 end

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CART</title>
+</head>
+<body>
+<h2>My Cart</h2>
+	Your Balance Remaining:<%=@accountdetails.balance%><br>
+	<ol>
+	<%if @products.length!=0%>
+		<%@products.each do |curproduct| %>
+			<li> Product id: <%=curproduct.id%><br>
+			Name: <%=curproduct.name%><br>
+			Price: <%=curproduct.price%><br>
+			Color: <%=curproduct.color%><br>
+			Category: <%=curproduct.category%><br>
+			
+			<%@shoppings.each do |curshopping| %>
+				
+				<%if curshopping.productid==curproduct.id %>
+					<form action="/edit" method="GET">
+						 Qty: <input type="number" name="qty" min="1" max="25" value="<%=curshopping.qty%>">
+						Added to Cart at : <%=curshopping.addtocartdate%><br><br>
+						<input type="submit" name="editorder" value="save"> 
+						<input type="submit" name="editorder" value="remove item">
+						<input type="hidden" name="productid" value="<%=curshopping.productid%>">
+					</form>	
+				<%end%>
+
+			edit qty through drop down selector(make input type number give initial value <%=curshopping.qty%>) , 	buy option ,remove from cart
+
+			<%end%>
+			</li>
+		<%end%>
+	<%else%>
+	
+	<%end%>	
+		
+	</ol>	
+</body>
+</html>
