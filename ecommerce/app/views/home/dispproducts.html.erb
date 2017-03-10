@@ -18,7 +18,7 @@
 
 									
 					<form action="/addtocart" method="GET">
-					Qty: <input type="number" name="qty" min="1" required>
+					Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" required>
 					<input type="submit" value="Add To Cart ">
 					<input type="hidden" name="productid" value="<%=curproduct.id%>">
 										
@@ -43,7 +43,7 @@
 
 									
 					<form action="/addtocart" method="GET">
-					Qty: <input type="number" name="qty" min="1" required>
+					Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" required>
 					<input type="submit" value="Add To Cart ">
 					<input type="hidden" name="productid" value="<%=curproduct.id%>">
 										

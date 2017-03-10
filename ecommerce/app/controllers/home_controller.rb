@@ -95,6 +95,7 @@ class HomeController < ApplicationController
 	end	
 
 	def addtocart
+
 		userid=session[:userid]
 		status="added"
 		qty=params[:qty]
@@ -133,7 +134,7 @@ class HomeController < ApplicationController
 		shopping=Shopping.find_by_userid_and_productid(userid,productid)
 		
 		if shopping
-			if editorder=="save"
+			if editorder=="save edited qty"
 				 shopping.qty=qty
 				shopping.save
 
@@ -141,12 +142,82 @@ class HomeController < ApplicationController
 			elsif editorder=="remove item"
 
 				shopping.destroy
-				shopping.save	
+					
 			return redirect_to '/mycart'
 			end	
 		end	
 	end	
 
 
+	def buy
+
+		@products=params[:products]
+		@availbal=params[:availbal]
+		@shoppings=params[:shoppings]
+
+	end	
+
+	def buyauthentication
+		username=params[:username]
+		txnpassword=params[:txnpassword]
+		userid=session[:userid]
+		
+		@availbal=params[:availbal]
+		
+
+		curaccount=Account.find_by_userid(userid)
+
+
+		status="added"
+		@products=[]
+		@shoppings=Shopping.where(:userid=>userid,:status=>status)
+		
+		
+		
+		@shoppings.each do |curshop|
+
+			@products+=Product.where(:id=>curshop.productid)
+
+	    end
+
+
+
+
+
+		if curaccount.username==username && curaccount.password==txnpassword
+			curaccount.balance=@availbal
+			curaccount.save
+			
+			@products.each do |curpro|
+				curshop = Shopping.find_by_userid_and_productid(userid,curpro.id)
+				curshop.buydate = Time.now
+				curshop.status = "bought"
+				curpro.qty = curpro.qty-curshop.qty
+				curshop.save
+				if curpro.qty==0
+					curpro.destroy
+					
+				else
+					curpro.save	
+				end	
+
+				
+				
+			end	
+
+			flash[:notice] = "Transaction Sucessful.."
+			
+			return redirect_to '/purchasecomplete'
+		else
+			flash[:notice] = "Transaction Unsucessful..Wrong Username or password"
+			
+			return redirect_to '/purchasecomplete'
+		end	
+
+	end	
+
+	def purchasecomplete
+
+	end	
 
 end

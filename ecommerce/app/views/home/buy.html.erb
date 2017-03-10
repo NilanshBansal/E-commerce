@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Transaction Page</title>
+</head>
+<body>
+<h2>Transaction Page</h2>
+
+<form action="/buyauthentication" method="GET">
+	Transaction Username: <input type="text" name="username" required>
+  	Transaction Password: <input type="Password" name="txnpassword" required>
+  	<input type="hidden" name="products" value="<%=@products%>">
+  	<input type="hidden" name="shoppings" value="<%=@shoppings%>">
+	<input type="hidden" name="availbal" value="<%=@availbal%>">
+  
+    <input type="submit" value="submit">
+
+</form>
+
+</body>
+</html>

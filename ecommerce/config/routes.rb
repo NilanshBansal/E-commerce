@@ -20,4 +20,7 @@ Rails.application.routes.draw do
   get '/mycart'=>'home#mycart'
   get '/addtocart'=>'home#addtocart'
   get '/edit'=>'home#edit'
+  get '/buy'=>'home#buy'
+  get '/buyauthentication'=>'home#buyauthentication'
+  get'/purchasecomplete'=>'home#purchasecomplete'
 end
