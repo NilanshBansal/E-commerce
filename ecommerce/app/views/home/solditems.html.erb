@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SOLD ITEMS</title>
+</head>
+<body>
+<h3>SOLD ITEMS</h3>
+<ol>
+	<%if @products.length!=0%>
+		<%@products.each do |curproduct| %>
+	      <li> Product id: <%=curproduct.id%><br>
+	      Name: <%=curproduct.name%><br>
+	      Price: <%=curproduct.price%><br>
+	      Color: <%=curproduct.color%><br>
+	      Category: <%=curproduct.category%><br>
+	      Qty Sold: <%=curproduct.qty%><br>
+	      </li>
+   		<%end%>    
+  <%else%>
+  <br>NO ITEMS<br>
+  <%end%>
+</ol> 
+
+<br>
+  <a href="/dashboard">Go Back </a>
+</body>
+</html>

@@ -6,7 +6,7 @@
 <body>
 <h2>My Cart</h2>
 	
-	<ol>
+	<ol><%flag=0%>
 	<%grandtotal=0%>
 	<%if @products.length!=0%>
 		<%@products.each do |curproduct| %>
@@ -20,12 +20,27 @@
 				
 				<%if curshopping.productid==curproduct.id %>
 					<form action="/edit" method="GET">
-						 Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" value="<%=curshopping.qty%>">
+
+					<%if curproduct.qty==0%>
+						----Item OUT OF STOCK----
+						<br>Please click on remove item to remove it from your cart then only payment will be processed<br>
+						<input type="submit" name="editorder" value="remove item">
+						<input type="hidden" name="productid" value="<%=curshopping.productid%>">
+					</form>	
+					<%elsif curshopping.qty > curproduct.qty%>
+						---Please reduce the qty as available stock is less--
+						<br>Please click on save edited qty after reducing the qty then only payment will be processed<br>
+					<%else%>
+						<%flag=1%>
+					<%end%>
+
+						Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" value="<%=curshopping.qty%>">
 						
 						<input type="submit" name="editorder" value="save edited qty"> 
 						<input type="submit" name="editorder" value="remove item">
 						<input type="hidden" name="productid" value="<%=curshopping.productid%>">
 					</form>	
+
 					Added to Cart at : <%=curshopping.addtocartdate%><br>
 					Total Price: <%=curproduct.price*curshopping.qty%><br><br>
 					<%grandtotal=grandtotal+curproduct.price*curshopping.qty%>
@@ -49,15 +64,18 @@
 			Please reduce some products...your available balance is less...
 		<%end%>	
 	<%else%>
-		<form action="/buy" method="GET">
-			<input type="submit" value="Make Payment">
-			<input type="hidden" name="products" value="<%=@products%>">
-			<input type="hidden" name="shoppings" value="<%=@shoppings%>">
-			<input type="hidden" name="availbal" value="<%=availbal%>">
-		</form>
+		<%if flag==1%>
+			<form action="/buy" method="GET">
+				<input type="submit" value="Make Payment">
+				<input type="hidden" name="products" value="<%=@products%>">
+				<input type="hidden" name="shoppings" value="<%=@shoppings%>">
+				<input type="hidden" name="availbal" value="<%=availbal%>">
+			</form>
+		<%end%>	
 	<%end%>			
 
-		
+	<br><br>
+	<a href="/dashboard">Go Back </a>	
 		
 </body>
 </html>

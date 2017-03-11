@@ -22,5 +22,7 @@ Rails.application.routes.draw do
   get '/edit'=>'home#edit'
   get '/buy'=>'home#buy'
   get '/buyauthentication'=>'home#buyauthentication'
-  get'/purchasecomplete'=>'home#purchasecomplete'
+  get '/purchasecomplete'=>'home#purchasecomplete'
+  get '/orders'=>'home#orders'
+  get '/solditems'=>'home#solditems'
 end

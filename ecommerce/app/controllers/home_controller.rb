@@ -71,14 +71,14 @@ class HomeController < ApplicationController
 		@curuserid=session[:userid]
 		@products=[]
 		@shoppings=[]
-
+		status="added"
 		
-		@products= Product.where(:category=>@category).where.not(:sellerid=>@curuserid)
+		@products= Product.where(:category=>@category).where.not(:sellerid=>@curuserid).where.not(:qty=>0)
 
 		if @products.length!=0
 			@products.each do |curpro| 
 				
-			temp=Shopping.find_by_userid_and_productid(@curuserid,curpro.id)
+			temp=Shopping.find_by_userid_and_productid_and_status(@curuserid,curpro.id,status)
 
 		
 			if temp
@@ -189,21 +189,14 @@ class HomeController < ApplicationController
 			curaccount.save
 			
 			@products.each do |curpro|
-				curshop = Shopping.find_by_userid_and_productid(userid,curpro.id)
+				curshop = Shopping.find_by_userid_and_productid_and_status(userid,curpro.id,status)
 				curshop.buydate = Time.now
 				curshop.status = "bought"
 				curpro.qty = curpro.qty-curshop.qty
 				curshop.save
-				if curpro.qty==0
-					curpro.destroy
-					
-				else
-					curpro.save	
-				end	
-
+				curpro.save	
 				
-				
-			end	
+			end
 
 			flash[:notice] = "Transaction Sucessful.."
 			
@@ -217,6 +210,28 @@ class HomeController < ApplicationController
 	end	
 
 	def purchasecomplete
+
+	end	
+
+	def orders
+		userid=session[:userid]
+		status="bought"	
+		@products=[]
+
+		@shoppings=Shopping.where(:userid=>userid,:status=>status)
+
+		@shoppings.each do |curshop|
+
+			@products+=Product.where(:id=>curshop.productid)
+
+	    end
+	end
+
+	def solditems
+		userid=session[:userid]
+		@products=[]
+
+		@products=Product.where(:sellerid=>userid)
 
 	end	
 
