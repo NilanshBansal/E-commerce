@@ -6,9 +6,9 @@
 <body>
 	<h2>Sell Product</h2>
 
-	<form action="/sellstore" method="get">
-	Name: <input type="text" name="name" required><br>
-	Price:<input type="number" name="price" min="1" required><br>
+	<form action="/sellstore" method="POST">
+	Name: <input type="text" name="name" required autocomplete="off"><br>
+	Price:<input type="number" name="price" min="1" required autocomplete="off"><br>
 	Qty:<input type="number" name="qty" min="1" max="25" value="1">
 	Color:<input type="color" name="color"><br>
 	Category:

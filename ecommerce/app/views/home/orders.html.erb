@@ -8,33 +8,34 @@
 
 
 
+
 <ol>
   <%if @products.length!=0%>
-    <%@products.each do |curproduct| %>
-      <li> Product id: <%=curproduct.id%><br>
+    <%@products.zip(@shoppings).each do |curproduct,curshopping| %>
+       <li> Product id: <%=curproduct.id%><br>
       Name: <%=curproduct.name%><br>
       Price: <%=curproduct.price%><br>
-      Color: <%=curproduct.color%><br>
+       
+      Color:  <div style="height: 30px; width: 50px; background-color: <%= curproduct.color %>">  </div> <br>
       Category: <%=curproduct.category%><br>
       Seller Id:<%=curproduct.sellerid%><br>
       <%seller=User.find(curproduct.sellerid)%>
 
       Seller Name:<%=seller.name%><br>
       Seller Email:<%=seller.email%><br>
-      <%@shoppings.each do |curshopping| %>
-        <%if curshopping.productid==curproduct.id %>
-          Qty Purchased: <%=curshopping.qty%><br> 
-          Added to Cart at : <%=curshopping.addtocartdate%><br>
-          Bought At: <%=curshopping.buydate%><br>
-          Total Price: <%=curproduct.price*curshopping.qty%><br><br>
-        <%end%>
-      <%end%>
-      </li>
+
+      Qty Purchased: <%=curshopping.qty%><br> 
+      Added to Cart at : <%=curshopping.addtocartdate%><br>
+      Bought At: <%=curshopping.buydate%><br>
+      Total Price: <%=curproduct.price*curshopping.qty%><br><br>
+
+       </li>
     <%end%>    
   <%else%>
   <br>NO PURCHASES<br>
   <%end%>
 </ol>
+
 
 
 <br>

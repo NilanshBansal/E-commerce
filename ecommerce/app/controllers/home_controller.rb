@@ -28,11 +28,7 @@ class HomeController < ApplicationController
 	def dashboard
 	end
 	
-    def statement
-	end
-
-	def balance
-	end
+    
 	
 	def personal
 		userid=session[:userid]
@@ -43,6 +39,13 @@ class HomeController < ApplicationController
 
 
 	end
+
+	def changeaccountinfo
+
+		flash[:notice]="Changes done successfully"
+		
+		return redirect_to '/personal'
+	end	
 
 	def sell
 

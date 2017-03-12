@@ -13,13 +13,13 @@
 			<li> Product id: <%=curproduct.id%><br>
 			Name: <%=curproduct.name%><br>
 			Price: <%=curproduct.price%><br>
-			Color: <%=curproduct.color%><br>
+			Color: <div style="height: 30px; width: 50px; background-color: <%= curproduct.color %>">  </div> <br>
 			Category: <%=curproduct.category%><br>
 			
 			<%@shoppings.each do |curshopping| %>
 				
 				<%if curshopping.productid==curproduct.id %>
-					<form action="/edit" method="GET">
+					<form action="/edit" method="POST">
 
 					<%if curproduct.qty==0%>
 						----Item OUT OF STOCK----
@@ -65,7 +65,7 @@
 		<%end%>	
 	<%else%>
 		<%if flag==1%>
-			<form action="/buy" method="GET">
+			<form action="/buy" method="POST">
 				<input type="submit" value="Make Payment">
 				<input type="hidden" name="products" value="<%=@products%>">
 				<input type="hidden" name="shoppings" value="<%=@shoppings%>">

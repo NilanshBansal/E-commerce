@@ -12,13 +12,14 @@
 		<%elsif @shoppings.length==0%>
 			<%@products.each do |curproduct| %>
 				<li>	
-					<strong>Name: </strong><%=curproduct.name%>  <br> <strong>Color: </strong><%=curproduct.color%> <br>
+					<strong>Name: </strong><%=curproduct.name%>  <br> 
+					<strong>Color: </strong> <div style="height: 30px; width: 50px; background-color: <%= curproduct.color %>">  </div> <br>
 					<strong>Price: </strong><%=curproduct.price%>  <br>
 					<strong>Description: </strong><%=curproduct.description%><br>
 
 									
-					<form action="/addtocart" method="GET">
-					Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" required>
+					<form action="/addtocart" method="POST">
+					Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" value="1" required>
 					<input type="submit" value="Add To Cart ">
 					<input type="hidden" name="productid" value="<%=curproduct.id%>">
 										
@@ -37,13 +38,13 @@
 				<%end%>
 				<%if flag==0%>
 					<li>	
-					<strong>Name: </strong><%=curproduct.name%>  <br> <strong>Color: </strong><%=curproduct.color%> <br>
+					<strong>Name: </strong><%=curproduct.name%>  <br> <strong>Color: </strong> <div style="height: 30px; width: 50px; background-color: <%= curproduct.color %>">  </div> <br>
 					<strong>Price: </strong><%=curproduct.price%>  <br>
 					<strong>Description: </strong><%=curproduct.description%><br>
 
 									
-					<form action="/addtocart" method="GET">
-					Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" required>
+					<form action="/addtocart" method="POST">
+					Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" value="1" required>
 					<input type="submit" value="Add To Cart ">
 					<input type="hidden" name="productid" value="<%=curproduct.id%>">
 										

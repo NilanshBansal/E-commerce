@@ -4,7 +4,11 @@
 	<title></title>
 </head>
 <body>
+ <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %><br><br>
 	<h2>USER DETAILS</h2>
+	
 
 	Name:  <%=@curuser.name%><br>
 	Email: <%=@curuser.email%><br>
@@ -22,8 +26,11 @@
 	<%for i in 2..@len2%>
 		 *
 	<%end%>	<br>
-	Balance: <%=@curaccount.balance%><br>
+	Balance: <%=@curaccount.balance%>
 
+	<form action="/changeaccountinfo" method="POST">
+		<input type="submit" name="edit" value="Edit Balance">
+	</form>	
 	<br><br><br><br>
 	<a href="/dashboard">Go Back</a>
 

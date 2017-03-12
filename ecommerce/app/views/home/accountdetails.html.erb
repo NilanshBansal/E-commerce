@@ -10,10 +10,10 @@
     <div class="notice"><%= flash[:notice] %></div>
   <% end %>
 <br><br><br><br>
-  <form action="/accountdetailscheck" method="GET">
-  	Transaction Username: <input type="text" name="username" required>
+  <form action="/accountdetailscheck" method="POST">
+  	Transaction Username: <input type="text" name="username" required autocomplete="off">
   	Transaction Password: <input type="Password" name="txnpassword" required>
-  	Enter Account Balance: <input type="text" name="balance" required>
+  	Enter Account Balance: <input type="text" name="balance" required autocomplete="off">
     <input type="submit" value="submit">
 
  </form>
