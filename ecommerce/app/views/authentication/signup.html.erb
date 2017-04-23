@@ -4,17 +4,18 @@
   <% end %>
 <br><br><br><br>
 
-<form action="/signupcheck" method="POST">
+<form action="/signupcheck" method="POST" enctype="multipart/form-data">
 Name: <input type="text" name="name" required>
 E-mail : <input type="text" name="email" required>
 Password: <input type="Password" name="password" required>
+Profile pic:<input type="file" name="profilepic">
 
 
 <input type="submit" value="CREATE USER">
 
 <br><br><br><br>
 
-Existing user?<a href="/signin">LOGIN</a>
+<h3>Existing user?</h3><a href="/signin"><img src="/assets/login.jpg" style="height: 50px;width: 90px;"  /></a>
 
 
 </form>

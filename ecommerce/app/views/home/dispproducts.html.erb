@@ -5,25 +5,28 @@
 </head>
 <body>
 	<h3>Displaying all products from <%=@category%> category </h3>
+	<div id="liparent">
 	<ol>
 		<%if @products.length==0 %>
 			NO PRODUCTS TO DISPLAY ...CHECK YOUR CART 
 
 		<%elsif @shoppings.length==0%>
 			<%@products.each do |curproduct| %>
-				<li>	
+				<li class="itemsdisplay">	
 					<strong>Name: </strong><%=curproduct.name%>  <br> 
 					<strong>Color: </strong> <div style="height: 30px; width: 50px; background-color: <%= curproduct.color %>">  </div> <br>
 					<strong>Price: </strong><%=curproduct.price%>  <br>
 					<strong>Description: </strong><%=curproduct.description%><br>
 
 									
-					<form action="/addtocart" method="POST">
+					<form action="/addtocart" method="POST"  class="addtocartform" id="<%=curproduct.id%>">
 					Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" value="1" required>
 					<input type="submit" value="Add To Cart ">
 					<input type="hidden" name="productid" value="<%=curproduct.id%>">
 										
 					</form>	
+					<div class="appendgotocartajaxcontainer">
+					</div>
 				</li>	
 			<%end%>
 
@@ -34,31 +37,48 @@
 				<%@shoppings.each do |curshop| %>
 					<%if  curshop.productid==curproduct.id %>
 						<%flag=1%>
+						<li class="itemsdisplay">	
+							<strong>Name: </strong><%=curproduct.name%>  <br> <strong>Color: </strong> <div style="height: 30px; width: 50px; background-color: <%= curproduct.color %>">  </div> <br>
+							<strong>Price: </strong><%=curproduct.price%>  <br>
+							<strong>Description: </strong><%=curproduct.description%><br>
+
+									
+							
+								
+								<div class="button"><a href="/mycart">GO TO CART</a></div>
+								
+										
+								
+				    	</li>
 					<%end%>
 				<%end%>
 				<%if flag==0%>
-					<li>	
+					<li class="itemsdisplay">	
 					<strong>Name: </strong><%=curproduct.name%>  <br> <strong>Color: </strong> <div style="height: 30px; width: 50px; background-color: <%= curproduct.color %>">  </div> <br>
 					<strong>Price: </strong><%=curproduct.price%>  <br>
 					<strong>Description: </strong><%=curproduct.description%><br>
 
 									
-					<form action="/addtocart" method="POST">
+					<form action="/addtocart" method="POST" class="addtocartform" id="<%=curproduct.id%>">
 					Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" value="1" required>
 					<input type="submit" value="Add To Cart ">
 					<input type="hidden" name="productid" value="<%=curproduct.id%>">
 										
 					</form>	
+					<div class="appendgotocartajaxcontainer">
+					
+					</div>
 				    </li>
 				<%end%>
 			<%end%>
 
 		<%end%>	
 
+
 		 
 
 	</ol>
-
+	</div>
 	
 	
 

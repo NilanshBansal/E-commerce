@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Cart </title>
+</head>
+<body>
+<ol>
+
+
+<%if @cart%>
+	<%for i in 0...@cart.length %>
+		<li>
+			<%curproductdetail=Product.find_by_id(@cart[i]["productid"])%>
+			<strong>productid:</strong>	<%=@cart[i]["productid"]%>    			 <br>
+			<strong>qty:</strong><%=@cart[i]["qty"]%>	               		   	 <br>
+			<strong>addtocartdate:</strong>	<%=@cart[i]["addtocartdate"]%>       <br>
+			<strong>Name:</strong><%=curproductdetail.name%>					 <br>
+			<strong>Price:</strong><%=curproductdetail.price%>					 <br>
+			<strong>Color:</strong><div style="height: 30px; width: 50px; background-color: <%= curproductdetail.color %>">  </div> <br>
+			<strong>Description:</strong><%=curproductdetail.description%>       <br>
+			<strong>Category:</strong><%=curproductdetail.category%>			 <br>
+
+		</li>	
+		<br><br>
+	<% end %>
+<% end %>	
+</ol>
+
+<%= link_to 'Go Back', '/' %>
+<br><br><br>
+<%if @cart%>
+	<form action="/clearsessioncart" method="post">
+	<input type="submit" value="CLEAR CART">
+	</form>
+<%end%>
+</body>
+</html>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308070543) do
+ActiveRecord::Schema.define(version: 20170317093302) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "userid"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20170308070543) do
     t.string   "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "profilepic"
   end
 
 end

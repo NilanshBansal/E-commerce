@@ -8,18 +8,31 @@ class AuthenticationController < ApplicationController
   end
   
   def signupcheck
+    
     name =params[:name]
   	email = params[:email]
     password = params[:password]
     user = User.find_by_email(email)
+    
 
-     
+
+
 	if not user
 	    	
 
 		  	user=User.create(:name=>params[:name],:email=>params[:email],:password=>params[:password])
 		   
 		    session[:userid]=user.id
+        session[:cart] = user.cart
+
+        profilepic = params["profilepic"].original_filename
+        user.profilepic = profilepic
+        user.save
+        file_name = user.id.to_s + "_" + profilepic
+        temp_file = params["profilepic"]
+        File.open(Rails.root.join('public', 'uploads', file_name), 'wb') do |file|
+        file.write(temp_file.read)
+        end
 
 		    flash[:notice] = "User Created!!! .. logged into ur account !!!"
 
@@ -61,7 +74,7 @@ class AuthenticationController < ApplicationController
   end
   	
   def logout
-  	session[:userid]=nil
+  	session[:userid] = nil
   	return redirect_to '/'
   end
 

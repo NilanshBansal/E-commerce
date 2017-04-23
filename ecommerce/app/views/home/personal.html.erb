@@ -1,37 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+
+	
+
 </head>
 <body>
- <% if flash[:notice] %>
-    <div class="notice"><%= flash[:notice] %></div>
-  <% end %><br><br>
+
+    <div id="balance_notice"> 
+
+    </div>
+    <br><br>
 	<h2>USER DETAILS</h2>
-	
+	<div id="top">
+		<img src="<%=@file%>" id="pic" style="height: 100px; width: 100px; border-radius: 50%; border: 1px solid grey;">
+		<br>
+		
+		<div id="text">
+		Name:  <%=@curuser.name%><br>
+		Email: <%=@curuser.email%><br>
 
-	Name:  <%=@curuser.name%><br>
-	Email: <%=@curuser.email%><br>
+		Password: <%=@curuser.password.first%>
 
-	Password: <%=@curuser.password.first%>
-
-	<%for i in 2..@len1%>
-		 *
-	<%end%>	
-	
-	<br><br><br><br>
+		<%for i in 2..@len1%>
+			 *
+		<%end%>	
+		</div>
+	</div>
+	<br>
 	<h2>BANK DETAILS</h2>
 	Username: <%=@curaccount.username%><br>
 	Password: <%=@curaccount.password.first%>
 	<%for i in 2..@len2%>
 		 *
 	<%end%>	<br>
-	Balance: <%=@curaccount.balance%>
 
-	<form action="/changeaccountinfo" method="POST">
-		<input type="submit" name="edit" value="Edit Balance">
+
+	<form action="/changeaccountinfo" method="POST" id="change_balance">
+			Balance: <input type="number" name="changedbalance" value="<%=@curaccount.balance%>" >
+		<input type="submit" value="save changes">
+
 	</form>	
 	<br><br><br><br>
+	<div id="balance">
+		
+	</div>
+
 	<a href="/dashboard">Go Back</a>
 
 </body>

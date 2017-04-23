@@ -7,18 +7,78 @@
 
 
 <h2 align="center">Welcome to MY E-COMMERCE Website</h2> 
+<div id="indexheader">
+	<div id="indexheader_signin"> 
+		<h3>Existing user?</h3><a href="/signin"><img src="/assets/login.jpg" style="height: 50px;width: 90px;"  /></a>
+	</div>
+	<div id="indexheader_cart">	
+		<h3>Go to CART</h3><a href="/sessioncart"><img src="/assets/cart.png" style="height: 50px;width: 90px;"  /></a>
+	</div>	
+</div>	
 
-<div class="left">
-	
+<div class="main">
+	<div class="categories">
+			<form action="/" method="get">
+				<input id="sports" type="submit" value="sports" name="category" >
+		 		<input id="clothing" type="submit" value="clothing" name="category" >
+		    	<input id="shoes" type="submit" value="shoes" name="category">
+		    	<input id="electronics" type="submit" value="electronics" name="category" >
+				<input id="anonymous" type="submit" value="anonymous" name="category" >
+			</form>
+		
+	</div>
+
+	<div class="allproducts">
+		<ol>
+			<% @products.each do|curproduct|%>
+				<%flag=0%>
+				<li class="product">	
+					<strong>Name: </strong><%=curproduct.name%>  <br> 
+					<strong>Color: </strong> <div style="height: 30px; width: 50px; background-color: <%= curproduct.color %>">  </div> <br>
+					<strong>Price: </strong><%=curproduct.price%>  <br>
+					<strong>Description: </strong><%=curproduct.description%><br>
+					<strong>Category:</strong><%=curproduct.category%><br>
+				<%if @cart%>
+					<%for i in 0...@cart.length %>	
+						<%if @cart[i]["productid"]==curproduct.id%> 
+							
+							<form action="/sessioncart" method="get">
+								<input type="submit" value="GO To Cart ">
+								<input type="hidden" name="productid" value="<%=curproduct.id%>">						
+							</form>	
+							<%flag=1%>
+						<%end%>
+					<%end%>	
+					<%if flag==0%>
+											
+						<form action="/addtosessioncart" method="post">
+							Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" value="1" required>
+							<input type="submit" value="Add To Cart ">
+							<input type="hidden" name="productid" value="<%=curproduct.id%>">						
+						</form>	
+					<%end%>
+				<%else%>	
+					
+					<form action="/addtosessioncart" method="POST">
+								Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" value="1" required>
+								<input type="submit" value="Add To Cart ">
+								<input type="hidden" name="productid" value="<%=curproduct.id%>">						
+					</form>	
+
+				<%end%>	
+
+				</li>		
+			<%end%>	
+		</ol>	
+	</div>
+
 </div>
 
 
-<br><br><br><br>
 
-Existing user?<a href="/signin">LOGIN</a>
 
-<br><br><br>
-New User?<a href="/signup">signup</a>
+
+<h3>New User?</h3><a href="/signup"><img src="/assets/signup.png" style="height: 90px;width: 90px;"  /></a>
 
 
 </body>

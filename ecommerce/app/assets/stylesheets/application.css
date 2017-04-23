@@ -13,3 +13,118 @@
  *= require_tree .
  *= require_self
  */
+
+<style type="text/css">
+
+		#top{
+			display:flex;
+			align-items: center;
+			
+			padding-left: 20px;
+			border: 1px;
+			height:150px;
+
+		}
+
+		#text{
+			margin-left: 20px;
+				
+
+		}
+
+		.categories > form{
+			padding: 10px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+			height: 300px;
+		}
+
+		.categories > form > input{
+			height: 50px;
+			width: 120px;
+			border: 0px;
+			background-color: cyan;
+			color: blue;
+			font-size: 20px;
+			border-radius: 5%;
+		}
+
+		.categories > form > input:hover{
+			cursor: pointer;
+			box-shadow: 0 0 50px grey;
+			transform: scale(1.2);
+		}
+
+
+
+		.main{
+			display: flex;
+			align-items: center;
+			width: 80%;
+			margin-left: 100px;
+		}
+
+		.product{
+			padding: 10px;
+			border: 1px solid grey;
+			margin-left: 100px;
+
+		}
+
+		#dashboardcategories{
+			display: flex;
+			justify-content: flex-start;
+			padding-left: 20px;
+		}
+		
+		#indexheader{
+			display:flex;
+
+			justify-content: space-between;
+			margin: 30px;
+			margin-right: 50px;
+		}
+
+		.dashboardtoplinks{
+			display: flex;
+			justify-content: space-around;
+		}
+
+		.dashboardtoplinks>a{
+			border:1px solid grey;
+			border-radius: 50%;
+			height:25px;
+			width:150px;
+			color: black;
+			background-color: orange;
+			display:flex;
+			justify-content: space-around;
+			text-decoration: none;
+			align-items: center;
+		}	
+
+		.button,#dispproductsgotocartbtn{
+			
+			border:1px solid grey;
+			width:120px;
+			height: 30px;
+			cursor: pointer;
+			
+    		background-color: buttonface;
+    		box-sizing: border-box;
+    		border-image:initial;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			
+		}
+
+		a{
+			text-decoration: none;
+			color:black;
+		}
+		
+
+	</style>

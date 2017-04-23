@@ -1,8 +1,48 @@
 class HomeController < ApplicationController
+	before_action :authenticate_user, :except=> [:index , :addtosessioncart , :sessioncart,:clearsessioncart]
+
+	def authenticate_user
+		unless(session[:userid])
+			return redirect_to '/signin'
+		end
+	end
+	
+
 
 	def index
-		
+		@cart=session[:cart]
+		if(session[:userid])
+			return redirect_to '/dashboard'
+		end
+		@products = Product.where(:category => 'sports')
+		if(params[:category]) 
+			@products=Product.where(:category => params[:category])
+		end
 	end	
+
+	def addtosessioncart
+		status="added"
+		qty=params[:qty]
+		productid=params[:productid]
+		addtocartdate=Time.now
+		shopping = Shopping.create(:status=>status,:qty=>qty,:productid=>productid,:addtocartdate=>addtocartdate)
+		if(session[:cart].nil?)
+			session[:cart]=[]
+		end	
+		session[:cart] << shopping
+		shopping.destroy
+		return redirect_to '/'
+	end
+			
+	def clearsessioncart
+		session[:cart]=nil
+		return redirect_to '/sessioncart'
+	end	
+
+	def sessioncart
+		
+		@cart = session[:cart]
+	end
 
 	def accountdetailscheck
 		username=params[:username]
@@ -36,15 +76,30 @@ class HomeController < ApplicationController
 		@len1=@curuser.password.length
 		@curaccount=Account.find_by_userid(@curuser.id)
 		@len2=@curaccount.password.length
+		
+		if(@curuser.profilepic==nil)
+			@file="/uploads/" + "default.png"
+		else
+		@file = "/uploads/" + @curuser.id.to_s + "_" + @curuser.profilepic
 
+		end		
 
 	end
 
 	def changeaccountinfo
-
-		flash[:notice]="Changes done successfully"
-		
-		return redirect_to '/personal'
+		data = {}
+		status = nil
+		account = Account.find_by_userid(session[:userid])
+		if(account.password == params[:password])
+		  account.balance = params[:balance]
+		  status = true
+		  account.save
+		else
+		  status = false;	
+		end
+		data['status'] = status
+		data['newBalance'] = account.balance
+		render json: data
 	end	
 
 	def sell
@@ -112,6 +167,7 @@ class HomeController < ApplicationController
 
 
 	def mycart
+		
 		@userid=session[:userid]
 		status="added"
 		@products=[]
@@ -153,7 +209,7 @@ class HomeController < ApplicationController
 
 
 	def buy
-
+		
 		@products=params[:products]
 		@availbal=params[:availbal]
 		@shoppings=params[:shoppings]
@@ -238,4 +294,68 @@ class HomeController < ApplicationController
 
 	end	
 
+	def removeitemcartajax
+		data={}
+		userid=session[:userid]
+		curaccount=Account.find_by_userid(userid)
+		balance=curaccount.balance
+		item=Shopping.find_by_userid_and_productid(userid,params[:itemid])
+		if item
+			data['accountbal']=balance
+			item.destroy
+		end	
+		render json:data
+	end	
+
+	def addtocartajax
+		data={}
+		userid=session[:userid]
+		status="added"
+		qty=params[:qty]
+		productid=params[:itemid]
+		addtocartdate=Time.now
+		Shopping.create(:userid=>userid,:status=>status,:qty=>qty,:productid=>productid,:addtocartdate=>addtocartdate)
+		render json:data
+	end	
+
+	def saveeditedqtyajax
+		
+		data={}
+		userid=session[:userid]
+		qtyadded=params[:qtyadded]
+		productid=params[:itemid]
+		curaccount=Account.find_by_userid(userid)
+		balance=curaccount.balance
+		shopping=Shopping.find_by_userid_and_productid(userid,productid)
+
+		if shopping
+			data['oldqty']=shopping.qty
+			data['accountbal']=balance
+			shopping.qty=qtyadded
+			shopping.save
+			
+		end	
+
+		render json:data
+	end	
+
+	def removeitem
+
+		qty=params[:qty]
+		userid=session[:userid]
+		editorder=params[:editorder]
+		productid=params[:productid]
+		shopping=Shopping.find_by_userid_and_productid(userid,productid)
+		
+		if shopping
+			if editorder=="remove item"
+
+				shopping.destroy
+					
+			return redirect_to '/mycart'
+			end	
+		end	
+	end	
+
+	
 end

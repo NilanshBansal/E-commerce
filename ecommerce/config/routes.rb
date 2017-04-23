@@ -1,14 +1,15 @@
 Rails.application.routes.draw do
 
-  get 'signin'=>'authentication#signin'
+  get '/signin'=>'authentication#signin'
 
-  get 'signup'=>'authentication#signup'
-
-  get 'logout'=>'authentication#logout'
-  post 'signupcheck'=>'authentication#signupcheck'
-  post 'signincheck'=>'authentication#signincheck'
-  
-  
+  get '/signup'=>'authentication#signup'
+  post '/clearsessioncart'=>'home#clearsessioncart'
+  get '/logout'=>'authentication#logout'
+  post '/signupcheck'=>'authentication#signupcheck'
+  post '/signincheck'=>'authentication#signincheck'
+  post '/removeitem'=>'home#removeitem'
+  post '/addtosessioncart' => 'home#addtosessioncart'
+  get '/sessioncart' => 'home#sessioncart'
   get 'dashboard'=>'home#dashboard'
   get 'accountdetails'=>'home#accountdetails'
   post 'accountdetailscheck'=>'home#accountdetailscheck'
@@ -17,6 +18,7 @@ Rails.application.routes.draw do
   post 'sellstore'=>'home#sellstore'
   get '/' => 'home#index'
   post '/dispproducts'=>'home#dispproducts'
+  get '/dispproducts'=>'home#dispproducts'
   get '/mycart'=>'home#mycart'
   post '/addtocart'=>'home#addtocart'
   post '/edit'=>'home#edit'
@@ -26,4 +28,7 @@ Rails.application.routes.draw do
   get '/orders'=>'home#orders'
   get '/solditems'=>'home#solditems'
   post '/changeaccountinfo'=>'home#changeaccountinfo'
+  post '/removeitemcart/ajax'=>'home#removeitemcartajax'
+  post '/addtocart/ajax'=>'home#addtocartajax'
+  post '/saveeditedqty/ajax'=>'home#saveeditedqtyajax'
 end

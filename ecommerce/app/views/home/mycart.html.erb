@@ -7,26 +7,25 @@
 <h2>My Cart</h2>
 	
 	<ol><%flag=0%>
-	<%grandtotal=0%>
+	<%@grandtotal=0%>
 	<%if @products.length!=0%>
 		<%@products.each do |curproduct| %>
 			<li> Product id: <%=curproduct.id%><br>
 			Name: <%=curproduct.name%><br>
-			Price: <%=curproduct.price%><br>
+			Price: <div><%=curproduct.price%></div><br>
 			Color: <div style="height: 30px; width: 50px; background-color: <%= curproduct.color %>">  </div> <br>
 			Category: <%=curproduct.category%><br>
 			
 			<%@shoppings.each do |curshopping| %>
 				
 				<%if curshopping.productid==curproduct.id %>
-					<form action="/edit" method="POST">
+					<form  action="/edit" method="POST" class="editqtyform">
 
 					<%if curproduct.qty==0%>
 						----Item OUT OF STOCK----
 						<br>Please click on remove item to remove it from your cart then only payment will be processed<br>
-						<input type="submit" name="editorder" value="remove item">
-						<input type="hidden" name="productid" value="<%=curshopping.productid%>">
-					</form>	
+						
+					
 					<%elsif curshopping.qty > curproduct.qty%>
 						---Please reduce the qty as available stock is less--
 						<br>Please click on save edited qty after reducing the qty then only payment will be processed<br>
@@ -36,14 +35,18 @@
 
 						Qty: <input type="number" name="qty" min="1" max="<%=curproduct.qty%>" value="<%=curshopping.qty%>">
 						
-						<input type="submit" name="editorder" value="save edited qty"> 
-						<input type="submit" name="editorder" value="remove item">
+						<input class="saveeditedqtybtn" type="submit" name="editorder" value="save edited qty"> 
 						<input type="hidden" name="productid" value="<%=curshopping.productid%>">
+					</form>
+					<form action="/removeitem" method="POST" class="removeitemform"> 
+						<input class="removeitemcartbtn" id="<%=curshopping.productid%>" type="submit" name="editorder" value="remove item">
+						<input type="hidden" name="productid" value="<%=curshopping.productid%>">
+						
 					</form>	
 
 					Added to Cart at : <%=curshopping.addtocartdate%><br>
-					Total Price: <%=curproduct.price*curshopping.qty%><br><br>
-					<%grandtotal=grandtotal+curproduct.price*curshopping.qty%>
+					Total Price: <div ><%=curproduct.price*curshopping.qty%></div><br><br>
+					<%@grandtotal=@grandtotal+curproduct.price*curshopping.qty%>
 				<%end%>
 			<%end%>
 			
@@ -52,21 +55,21 @@
 	<%end%>	
 	</ol>
 				
-	Grand Total:<%=grandtotal%>	<br>
+	Grand Total:<div id="grandtotaldiv"><%=@grandtotal%>	</div><br>
 	Available Balance :<%=@accountdetails.balance%><br><br>
-	<%availbal=@accountdetails.balance - grandtotal %>
+	<%availbal=@accountdetails.balance - @grandtotal %>
 	
 	 
-	<%if availbal < 0 || grandtotal==0%>
-		<%if grandtotal==0%>
+	<%if availbal < 0 || @grandtotal==0%>
+		<%if @grandtotal==0%>
 			Add some products...
 		<%else%>
 			Please reduce some products...your available balance is less...
 		<%end%>	
 	<%else%>
 		<%if flag==1%>
-			<form action="/buy" method="POST">
-				<input type="submit" value="Make Payment">
+			<form action="/buy" method="POST" >
+				<input type="submit" value="Make Payment" id="makepaymentbtn">
 				<input type="hidden" name="products" value="<%=@products%>">
 				<input type="hidden" name="shoppings" value="<%=@shoppings%>">
 				<input type="hidden" name="availbal" value="<%=availbal%>">

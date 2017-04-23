@@ -4,33 +4,33 @@
 	<title>Dashboard</title>
 </head>
 <body><h2>DASHBOARD</h2>
-
+<div class="dashboardtoplinks">
 	<a href="/personal">Personal </a><br>
 	
 	<a href="/mycart">My Cart</a><br>
 	
 	<a href="/orders">My Purchases</a><br>
 
-	<a href="/solditems">My Sellings</a><br>
+	<a href="/solditems">Sold Items</a><br>
 
 	<a href="/sell">Sell</a><br><br><br><br>
-
+</div>
 	<h4>Categories</h4>
-	
-	<form action="/dispproducts" method="POST">
-	 <ul>
-		 <li><input type="submit" value="sports" name="category" ></li>
-	 	 <li><input type="submit" value="clothing" name="category" ></li>
-	     <li><input type="submit" value="shoes" name="category"></li>
-	     <li><input type="submit" value="electronics" name="category" ></li>
-		 <li><input type="submit" value="anonymous" name="category" ></li>
-	</ul>
+	<div class="categories" id="dashboardcategories">
+		<form action="/dispproducts" method="POST">
+		 
+			<input type="submit" value="sports" name="category" >
+		 	<input type="submit" value="clothing" name="category" >
+		    <input type="submit" value="shoes" name="category">
+		    <input type="submit" value="electronics" name="category" >
+			<input type="submit" value="anonymous" name="category" >
+		
 
-	
-	
+		</form>
+	</div>
 	<br><br><br><br>
 
-	<a href="/logout">Logout</a>
+	<a href="/logout"><img src="/assets/logout.png" style="height: 50px;width: 100px;"  /></a>
 	
 
 
